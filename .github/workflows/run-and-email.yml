@@ -30,13 +30,17 @@ jobs:
       # Step 4: Run the Python script
       - name: Run Python Script
         run: python main.py &
-        # Run in background so the screenshot can be captured
 
       # Step 5: Wait for the screenshot to be generated
-      - name: Wait for screenshot
-        run: sleep 100 # Wait for the app to launch and screenshot to be captured
+      - name: Wait for the app to run
+        run: sleep 40 # Wait for the app to launch
 
-      # Step 6: Send an email with the screenshot
+      # Step 6: Get the current time for the email subject
+      - name: Get current time
+        id: get_time
+        run: echo "CURRENT_TIME=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+
+      # Step 7: Send an email 
       - name: Send email with screenshot
         uses: dawidd6/action-send-mail@v3
         with:
@@ -44,10 +48,21 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Student Management System is running successfully"
+          subject: "Student Management System is running successfully at ${{ env.CURRENT_TIME }}"
           body: |
-            Hello ${{ secrets.FULL_NAME }}
-            The app has been run successfully. Screenshot attached for verification.
-          to: ${{ secrets.PERSONAL_EMAIL }}
+            Hello ${{ secrets.FULL_NAME }},
+            The app has been run successfully.
+            No errors found!!
+            ${{ secrets.GENERIC }}
+            
+            Hello ${{ secrets.NAME_2 }},
+            The app has been run successfully.
+            No errors found!!
+            ${{ secrets.GENERIC }}
+            
+            Hello ${{ secrets.NAME_3 }},
+            The app has been run successfully.
+            No errors found!!
+            ${{ secrets.GENERIC }}
+          to: ${{ secrets.PERSONAL_EMAIL_1 }}, ${{ secrets.PERSONAL_EMAIL_2 }}, ${{ secrets.PERSONAL_EMAIL_3 }}
           from: ${{ secrets.EMAIL_USERNAME }}
-          attachments: screenshot.png
