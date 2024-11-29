@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog, ttk
-import pyautogui
-
+from PIL import ImageGrab
 
 class StudentManagementSystem:
     def __init__(self, master):
@@ -60,17 +59,6 @@ class StudentManagementSystem:
 
         tk.Label(self.master, text="!!MINI PROJECT: Student Management System!!").grid(row=10, column=1, padx=10, pady=0)
 
-    def capture_screenshot(self):
-        """Capture a screenshot of the entire screen and save it."""
-        try:
-            # Take screenshot using pyautogui
-            screenshot = pyautogui.screenshot()
-
-            # Save the screenshot as 'screenshot.png' in the current directory
-            screenshot.save("screenshot.png")
-            print("Screenshot saved as screenshot.png")  # Log message for debugging
-        except Exception as e:
-            print(f"Error capturing screenshot: {e}")
 
     def add_student(self):
         try:
@@ -205,5 +193,14 @@ class StudentManagementSystem:
 if __name__ == "__main__":
     root = tk.Tk()
     app = StudentManagementSystem(root)
+    #adding testing here:
+
+    def take_screenshot():
+        # Capture the app window and save as screenshot.png
+            bbox = (root.winfo_rootx(), root.winfo_rooty(), root.winfo_rootx() + root.winfo_width(), root.winfo_rooty() + root.winfo_height())
+            ImageGrab.grab(bbox).save("screenshot.png")
+
+    # Take a screenshot after 5 seconds to allow the UI to load
+            root.after(5000, take_screenshot)
 
     root.mainloop()
