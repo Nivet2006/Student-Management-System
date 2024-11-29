@@ -50,20 +50,10 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Student Management System is running successfully at ${{ env.CURRENT_TIME }}"
           body: |
-            Hello ${{ secrets.FULL_NAME }},
+            Hello Team Member,
             The app has been run successfully.
             No errors found!!
             ${{ secrets.GENERIC }}
             
-            Hello ${{ secrets.NAME_2 }},
-            The app has been run successfully.
-            No errors found!!
-            ${{ secrets.GENERIC }}
-            
-            Hello ${{ secrets.NAME_3 }},
-            The app has been run successfully.
-            No errors found!!
-            Invitation as collaborator for the repository has been sent through github.
-            ${{ secrets.GENERIC }}
           to: ${{ secrets.PERSONAL_EMAIL }}, ${{ secrets.EMAIL_2 }}, ${{ secrets.EMAIL_3 }}
           from: ${{ secrets.EMAIL_USERNAME }}
