@@ -34,7 +34,7 @@ jobs:
 
       # Step 5: Wait for the screenshot to be generated
       - name: Wait for screenshot
-        run: sleep 10 # Wait for the app to launch and screenshot to be captured
+        run: sleep 100 # Wait for the app to launch and screenshot to be captured
 
       # Step 6: Send an email with the screenshot
       - name: Send email with screenshot
