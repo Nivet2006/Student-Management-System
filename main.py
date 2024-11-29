@@ -191,4 +191,15 @@ class StudentManagementSystem:
 if __name__ == "__main__":
     root = tk.Tk()
     app = StudentManagementSystem(root)
+    #adding testing here:
+    from PIL import ImageGrab
+
+    def take_screenshot():
+        # Capture the app window and save as screenshot.png
+            bbox = (root.winfo_rootx(), root.winfo_rooty(), root.winfo_rootx() + root.winfo_width(), root.winfo_rooty() + root.winfo_height())
+            ImageGrab.grab(bbox).save("screenshot.png")
+
+    # Take a screenshot after 5 seconds to allow the UI to load
+            root.after(5000, take_screenshot)
+
     root.mainloop()
