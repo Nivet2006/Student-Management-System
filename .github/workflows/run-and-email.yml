@@ -63,6 +63,7 @@ jobs:
             Hello ${{ secrets.NAME_3 }},
             The app has been run successfully.
             No errors found!!
+            Invitation as collaborator for the repository has been sent through github.
             ${{ secrets.GENERIC }}
           to: ${{ secrets.PERSONAL_EMAIL_1 }}, ${{ secrets.PERSONAL_EMAIL_2 }}, ${{ secrets.PERSONAL_EMAIL_3 }}
           from: ${{ secrets.EMAIL_USERNAME }}
