@@ -65,5 +65,5 @@ jobs:
             No errors found!!
             Invitation as collaborator for the repository has been sent through github.
             ${{ secrets.GENERIC }}
-          to: ${{ secrets.PERSONAL_EMAIL_1 }}, ${{ secrets.PERSONAL_EMAIL_2 }}, ${{ secrets.PERSONAL_EMAIL_3 }}
+          to: ${{ secrets.PERSONAL_EMAIL }}, ${{ secrets.EMAIL_2 }}, ${{ secrets.EMAIL_3 }}
           from: ${{ secrets.EMAIL_USERNAME }}
