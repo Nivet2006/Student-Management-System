@@ -1,5 +1,5 @@
 # Student Management System
-This mini-project titled "Student Management System" was developed as part of the coursework for Mini Project Submission at GCEM. 
+This mini-project titled "Student Management System" was developed as part of the coursework for Mini Project Submission for TEAM NO: 21 at GCEM. 
 It aims to streamline student data management using Python's tkinter library.
 
 ## PROBLEM STATEMENT:
