@@ -1,4 +1,4 @@
-# Student Management System
+# Student Management System [![Run App and Email Screenshot](https://github.com/Nivet2006/Student-Management-System/actions/workflows/run-and-email.yml/badge.svg)](https://github.com/Nivet2006/Student-Management-System/actions/workflows/run-and-email.yml)
 This mini-project titled "Student Management System" was developed as part of the coursework for Mini Project Submission for TEAM NO: 21 at GCEM. 
 It aims to streamline student data management using Python's tkinter library.
 
