@@ -1,0 +1,44 @@
+name: Run Code on Pull Request
+
+on:
+  pull_request: # Trigger workflow when a pull request is opened or updated
+    branches-ignore: 
+      - main # Exclude the 'main' branch from triggering this workflow
+
+jobs:
+  run-code:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up Python (if your code is Python-based)
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x' # Specify your Python version
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        pytest # Replace with your command to test or run the code
+      continue-on-error: true # Ensure the job continues even if tests fail
+
+    - name: Post PR Comment
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const errors = require('fs').existsSync('./.pytest_cache'); // Example check
+          const body = errors 
+            ? "Errors found in the code execution."
+            : "Code ran successfully, no errors detected!";
+
+          github.rest.issues.createComment({
+            issue_number: context.payload.pull_request.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: body
+          });
