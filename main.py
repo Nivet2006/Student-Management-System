@@ -57,7 +57,6 @@ class StudentManagementSystem:
 
         tk.Label(self.master, text="!!MINI PROJECT: Student Management System!!").grid(row=10, column=1, padx=10, pady=0)
 
-
     def add_student(self):
         try:
             data = (
