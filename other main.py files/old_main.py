@@ -1,11 +1,5 @@
-# add bg="colourname" in the main.py file for colour
-
 import tkinter as tk
 from tkinter import messagebox, simpledialog, ttk
-from tkinter import simpledialog
-from tkcalendar import DateEntry
-import re
-from datetime import datetime
 
 class StudentManagementSystem:
     def __init__(self, master):
@@ -14,7 +8,6 @@ class StudentManagementSystem:
         self.file_name = "students.txt"
         self.master.geometry("520x450")
         self.master.iconbitmap("gcem.ico")
-        # self.master.configure(bg="lightgrey")
         self.create_ui()
 
     def create_ui(self):
@@ -27,9 +20,6 @@ class StudentManagementSystem:
         self.mobile_var = tk.StringVar()
         self.pmobile_var = tk.StringVar()
         self.email_var = tk.StringVar()
-        tk.Button(self.master, text="Clear", command=self.clear_fields).grid(row=3, column=2, padx=10, pady=10)
-
-
 
         tk.Label(self.master, text="USN:").grid(row=0, column=0, padx=10, pady=10)
         tk.Entry(self.master, textvariable=self.roll_no_var).grid(row=0, column=1, padx=10, pady=10)
@@ -48,7 +38,7 @@ class StudentManagementSystem:
         ttk.Combobox(self.master, textvariable=self.semester_var, values=[1, 2, 3, 4, 5, 6, 7, 8]).grid(row=4, column=1, padx=10, pady=10)
 
         tk.Label(self.master, text="Date of Birth:").grid(row=5, column=0, padx=10, pady=10)
-        DateEntry(self.master, textvariable=self.dob_var, date_pattern='dd-mm-yyyy').grid(row=5, column=1, padx=10, pady=10)
+        tk.Entry(self.master, textvariable=self.dob_var).grid(row=5, column=1, padx=10, pady=10)
 
         tk.Label(self.master, text="Student's Mobile no:").grid(row=6, column=0, padx=10, pady=10)
         tk.Entry(self.master, textvariable=self.mobile_var).grid(row=6, column=1, padx=10, pady=10)
@@ -67,158 +57,8 @@ class StudentManagementSystem:
 
         tk.Label(self.master, text="!!MINI PROJECT: Student Management System!!").grid(row=10, column=1, padx=10, pady=0)
 
-    def validate_inputs(self):
-        with open(self.file_name, "r") as file:
-            data_lines = file.readlines()
-
-        if not self.roll_no_var.get().isdigit():
-            messagebox.showerror("Error", "USN must be numeric!")
-            return False
-
-        if any(line.startswith(self.roll_no_var.get() + ",") for line in data_lines):
-            if messagebox.askokcancel("Duplicate USN", "USN already exists. Do you want to update the existing record?"):
-                self.fetch_student()
-                return False
-            else:
-                return False
-
-        if any(self.mobile_var.get() in line.split(",") for line in data_lines):
-            messagebox.showerror("Error", "Duplicate Student Mobile Number found!")
-            return False
-
-        if any(self.pmobile_var.get() in line.split(",") for line in data_lines):
-            messagebox.showerror("Error", "Duplicate Parent Mobile Number found!")
-            return False
-
-        if any(self.email_var.get() in line.split(",") for line in data_lines):
-            messagebox.showerror("Error", "Duplicate Email ID found!")
-            return False
-
-        if not self.name_var.get().isalpha():
-            messagebox.showerror("Error", "Name must contain only alphabets!")
-            return False
-
-        if not self.gender_var.get():
-            messagebox.showerror("Error", "Gender must be selected!")
-            return False
-
-        if not re.match(r"\d{2}-\d{2}-\d{4}", self.dob_var.get()):
-            messagebox.showerror("Error", "Date of Birth must be in DD-MM-YYYY format!")
-            return False
-
-        try:
-            dob = datetime.strptime(self.dob_var.get(), "%d-%m-%Y")
-            if dob > datetime.now():
-                messagebox.showerror("Error", "Date of Birth cannot be in the future!")
-                return False
-        except ValueError:
-            messagebox.showerror("Error", "Invalid Date of Birth format!")
-            return False
-
-        if not (self.mobile_var.get().isdigit() and len(self.mobile_var.get()) == 10):
-            messagebox.showerror("Error", "Student's Mobile number must be exactly 10 digits!")
-            return False
-
-        if not (self.pmobile_var.get().isdigit() and len(self.pmobile_var.get()) == 10):
-            messagebox.showerror("Error", "Parent's Mobile number must be exactly 10 digits!")
-            return False
-
-        if not ("@" in self.email_var.get() and "." in self.email_var.get()):
-            messagebox.showerror("Error", "Invalid email address!")
-            return False
-
-        if not self.semester_var.get().isdigit() or not (1 <= int(self.semester_var.get()) <= 8):
-            messagebox.showerror("Error", "Semester must be between 1 and 8!")
-            return False
-
-        try:
-            cgpa = float(self.cgpa_var.get())
-            if cgpa > 10:
-                messagebox.showerror("Error", "CGPA must not exceed 10!")
-                return False
-        except ValueError:
-            messagebox.showerror("Error", "CGPA must be a numeric value!")
-            return False
-
-        return True
-
-    def revalidate_inputs(self):
-        with open(self.file_name, "r") as file:
-            data_lines = file.readlines()
-
-        if not self.roll_no_var.get().isdigit():
-            messagebox.showerror("Error", "USN must be numeric!")
-            return False
-
-        if not self.name_var.get().isalpha():
-            messagebox.showerror("Error", "Name must contain only alphabets!")
-            return False
-
-        if not self.gender_var.get():
-            messagebox.showerror("Error", "Gender must be selected!")
-            return False
-
-        if not re.match(r"\d{2}-\d{2}-\d{4}", self.dob_var.get()):
-            messagebox.showerror("Error", "Date of Birth must be in DD-MM-YYYY format!")
-            return False
-
-        try:
-            dob = datetime.strptime(self.dob_var.get(), "%d-%m-%Y")
-            if dob > datetime.now():
-                messagebox.showerror("Error", "Date of Birth cannot be in the future!")
-                return False
-        except ValueError:
-            messagebox.showerror("Error", "Invalid Date of Birth format!")
-            return False
-
-        if not (self.mobile_var.get().isdigit() and len(self.mobile_var.get()) == 10):
-            messagebox.showerror("Error", "Student's Mobile number must be exactly 10 digits!")
-            return False
-
-        if not (self.pmobile_var.get().isdigit() and len(self.pmobile_var.get()) == 10):
-            messagebox.showerror("Error", "Parent's Mobile number must be exactly 10 digits!")
-            return False
-
-        if not ("@" in self.email_var.get() and "." in self.email_var.get()):
-            messagebox.showerror("Error", "Invalid email address!")
-            return False
-
-        if not self.semester_var.get().isdigit() or not (1 <= int(self.semester_var.get()) <= 8):
-            messagebox.showerror("Error", "Semester must be between 1 and 8!")
-            return False
-
-        try:
-            cgpa = float(self.cgpa_var.get())
-            if cgpa > 10:
-                messagebox.showerror("Error", "CGPA must not exceed 10!")
-                return False
-        except ValueError:
-            messagebox.showerror("Error", "CGPA must be a numeric value!")
-            return False
-
-        return True
-
-
-
-    def clear_fields(self):
-        print("Clear Fields button clicked")  # Debugging statement
-        self.roll_no_var.set("")
-        self.name_var.set("")
-        self.gender_var.set("")
-        self.cgpa_var.set("")
-        self.semester_var.set("")
-        self.dob_var.set("")
-        self.mobile_var.set("")
-        self.pmobile_var.set("")
-        self.email_var.set("")
-        messagebox.showinfo("Success", "All fields cleared.")
-
-
     def add_student(self):
         try:
-            if not self.validate_inputs():
-                return
-
             data = (
                 self.roll_no_var.get(),
                 self.name_var.get(),
@@ -241,6 +81,7 @@ class StudentManagementSystem:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
     def fetch_student(self):
+        """Fetch details of a student by USN and populate fields."""
         try:
             roll_no = self.roll_no_var.get()
             if not roll_no:
@@ -266,11 +107,9 @@ class StudentManagementSystem:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
+#Save Update 
     def save_updates(self):
         try:
-            if not self.revalidate_inputs():
-                return
-
             roll_no = self.roll_no_var.get()
             if not roll_no:
                 messagebox.showerror("Error", "First Fetch and edit details to save updates!")
@@ -347,8 +186,8 @@ class StudentManagementSystem:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = StudentManagementSystem(root)
     root.mainloop()
-
