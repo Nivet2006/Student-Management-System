@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, simpledialog, ttk
+import re
 
 class StudentManagementSystem:
     def __init__(self, master):
@@ -57,7 +58,44 @@ class StudentManagementSystem:
 
         tk.Label(self.master, text="!!MINI PROJECT: Student Management System!!").grid(row=10, column=1, padx=10, pady=0)
 
+    def validate_input(self):
+        usn = self.roll_no_var.get()
+        name = self.name_var.get()
+        dob = self.dob_var.get()
+        mobile = self.mobile_var.get()
+        pmobile = self.pmobile_var.get()
+        email = self.email_var.get()
+
+        if not usn.isdigit():
+            messagebox.showerror("Error", "USN must contain only numbers.")
+            return False
+
+        if not name.isalpha():
+            messagebox.showerror("Error", "Name must contain only alphabets.")
+            return False
+
+        if not re.match(r"^\d{2}-\d{2}-\d{4}$", dob):
+            messagebox.showerror("Error", "Date of Birth must be in DD-MM-YYYY format.")
+            return False
+
+        if not (mobile.isdigit() and len(mobile) == 10):
+            messagebox.showerror("Error", "Student's Mobile number must be 10 digits.")
+            return False
+
+        if not (pmobile.isdigit() and len(pmobile) == 10):
+            messagebox.showerror("Error", "Parent's Mobile number must be 10 digits.")
+            return False
+
+        if not ("@" in email and "." in email):
+            messagebox.showerror("Error", "Invalid email format.")
+            return False
+
+        return True
+
     def add_student(self):
+        if not self.validate_input():
+            return
+
         try:
             data = (
                 self.roll_no_var.get(),
@@ -70,9 +108,6 @@ class StudentManagementSystem:
                 self.pmobile_var.get(),
                 self.email_var.get(),
             )
-            if any(not field for field in data):
-                messagebox.showerror("Error", "All fields are required!")
-                return
 
             with open(self.file_name, "a") as file:
                 file.write(",".join(data) + "\n")
@@ -80,8 +115,8 @@ class StudentManagementSystem:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
+    # Fetch, save, delete, and search methods remain unchanged
     def fetch_student(self):
-        """Fetch details of a student by USN and populate fields."""
         try:
             roll_no = self.roll_no_var.get()
             if not roll_no:
@@ -107,12 +142,14 @@ class StudentManagementSystem:
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
 
-#Save Update 
     def save_updates(self):
         try:
             roll_no = self.roll_no_var.get()
             if not roll_no:
                 messagebox.showerror("Error", "First Fetch and edit details to save updates!")
+                return
+
+            if not self.validate_input():
                 return
 
             with open(self.file_name, "r") as file:
@@ -185,7 +222,7 @@ class StudentManagementSystem:
             messagebox.showerror("Error", "USN not found!")
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
-
+print("Working... Check the app window!")
 
 if __name__ == "__main__":
     root = tk.Tk()
