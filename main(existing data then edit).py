@@ -70,8 +70,11 @@ class StudentManagementSystem:
             return False
 
         if any(line.startswith(self.roll_no_var.get() + ",") for line in data_lines):
-            messagebox.showerror("Error", "Duplicate USN found!")
-            return False
+            if messagebox.askokcancel("Duplicate USN", "USN already exists. Do you want to update the existing record?"):
+                self.fetch_student()
+                return False
+            else:
+                return False
 
         if any(self.mobile_var.get() in line.split(",") for line in data_lines):
             messagebox.showerror("Error", "Duplicate Student Mobile Number found!")
@@ -235,9 +238,7 @@ class StudentManagementSystem:
                     if not line.startswith(roll_no + ","):
                         file.write(line)
                     else:
-                        messagebox.showinfo("Success", f"Student {roll_no} deleted successfully.")
-                        return
-
+                        messagebox.show
             messagebox.showerror("Error", "USN not found!")
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
@@ -267,3 +268,4 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = StudentManagementSystem(root)
     root.mainloop()
+
