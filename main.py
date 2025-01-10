@@ -230,6 +230,9 @@ class StudentManagementSystem:
                 self.pmobile_var.get(),
                 self.email_var.get(),
             )
+            if any(not field for field in data):
+                messagebox.showerror("Error", "All fields are required!")
+                return
 
             with open(self.file_name, "a") as file:
                 file.write(",".join(data) + "\n")
