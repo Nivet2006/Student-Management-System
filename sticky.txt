@@ -1,0 +1,13 @@
+USN,NAME,GENDER,CGPA,SEMESTER,DD-MM-YYYY,STUDENT_MOBILE_NO,PARENT_MOBILE NO,EMAIL
+35,Nived,Male,6,1,04-02-2006,8431579309,9448201085,nivedshaji2006@gmail.com
+56,yeshwanth,Male,9,1,11-01-2025,1234567890,1234567890,hello@gcem.com
+12345,yeshU,Male,8,5,11-01-2025,1234555488,3451267890,yesh@gmail.com
+78,Kartik pratik,Male,9,2,11-01-2025,1597534568,8524566951,kartik@gmail.com
+A56,yeshU,Male,8,5,11-01-2025,1234875482,4569853267,yesuh@gmail.com
+
+
+CHANGE THIS CODE:
+if not re.fullmatch(r"[A-Za-z]\d{2}", self.roll_no_var.get()):
+            messagebox.showerror("Error", "USN must contain one letter followed by two digits (e.g., A12)!")
+            return False
+TO ACCEPT A-56

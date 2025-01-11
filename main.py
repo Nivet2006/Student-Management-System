@@ -71,8 +71,8 @@ class StudentManagementSystem:
         with open(self.file_name, "r") as file:
             data_lines = file.readlines()
 
-        if not self.roll_no_var.get().isdigit():
-            messagebox.showerror("Error", "USN must be numeric!")
+        if not re.fullmatch(r"[A-Za-z]-\d{2}", self.roll_no_var.get()):
+            messagebox.showerror("Error", "USN must contain one letter, a hyphen, and two digits (e.g., A-56)!")
             return False
 
         if any(line.startswith(self.roll_no_var.get() + ",") for line in data_lines):
@@ -147,10 +147,10 @@ class StudentManagementSystem:
         with open(self.file_name, "r") as file:
             data_lines = file.readlines()
 
-        if not self.roll_no_var.get().isdigit():
-            messagebox.showerror("Error", "USN must be numeric!")
+        if not re.fullmatch(r"[A-Za-z]-\d{2}", self.roll_no_var.get()):
+            messagebox.showerror("Error", "USN must contain one letter, a hyphen, and two digits (e.g., A-56)!")
             return False
-
+        
         if not self.name_var.get().isalpha():
             messagebox.showerror("Error", "Name must contain only alphabets!")
             return False
@@ -352,4 +352,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = StudentManagementSystem(root)
     root.mainloop()
-
