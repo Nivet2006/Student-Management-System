@@ -94,9 +94,10 @@ class StudentManagementSystem:
             messagebox.showerror("Error", "Duplicate Email ID found!")
             return False
 
-        if not self.name_var.get().isalpha():
+        if not self.name_var.get().replace(" ", "").isalpha():
             messagebox.showerror("Error", "Name must contain only alphabets!")
             return False
+
 
         if not self.gender_var.get():
             messagebox.showerror("Error", "Gender must be selected!")
